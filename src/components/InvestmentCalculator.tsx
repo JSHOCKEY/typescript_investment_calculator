@@ -70,6 +70,16 @@ export default function InvestmentCalculator() {
     });
   };
 
+  const handleReturnInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^\d*\.?\d*$/.test(value)) {
+      setFormData({
+        ...formData,
+        [e.target.name]: value,
+      });
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setResults(calculateInvestment(formData));
@@ -77,7 +87,6 @@ export default function InvestmentCalculator() {
 
   return (
     <div className="p-6 max-w-xl mx-auto bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Investment Calculator</h2>
       <form onSubmit={handleSubmit} className="space-y-5">
         <input
           type="number"
@@ -100,8 +109,8 @@ export default function InvestmentCalculator() {
           name="expectedReturn"
           step="0.01"
           value={formData.expectedReturn || ""}
-          onChange={handleInputChange}
-          placeholder="Expected return rate % (ex: 0.08)"
+          onChange={handleReturnInputChange}
+          placeholder="Expected return rate % (ex: 0.07)"
           className="w-full p-2 border rounded"
         />
         <input
@@ -112,7 +121,7 @@ export default function InvestmentCalculator() {
           placeholder="Duration in years (ex: 5)"
           className="w-full p-2 border rounded"
         />
-        <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded">
+        <button type="submit" className="w-full bg-red-700 hover:bg-black text-white p-3 rounded cursor-pointer transition-all duration-250">
           Calculate
         </button>
       </form>
